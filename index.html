@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>diyr_programmer // fan</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="terminal">
+        <header>
+            DIYR FAN PROGRAMMER // V0.1
+        </header>
+
+        <section id="output-log"><pre>> Initializing uploader...
+> Awaiting user action.
+</pre></section>
+
+        <footer id="controls">
+            <div class="controls-stack">
+                <div class="line">
+                    <select id="firmware-select"></select>
+                </div>
+                <div class="line">
+                    <button id="connect-btn">CONNECT & FLASH</button>
+                </div>
+                <div class="line">
+                    <button id="monitor-btn">START MONITOR</button>
+                </div>
+            </div>
+            <img src="DIYR_Logo_White.svg" alt="DIYR logo" id="controls-logo">
+        </footer>
+
+        <nav id="source-link">
+            // Source code available: <a href="https://github.com/your-org/diyr-fan" target="_blank" rel="noopener noreferrer">github.com/your-org/diyr-fan</a> //
+        </nav>
+    </div>
+
+    <!-- YOUR SCRIPT MUST ALSO BE A MODULE to import from the library -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>

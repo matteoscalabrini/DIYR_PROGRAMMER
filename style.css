@@ -1,0 +1,114 @@
+body {
+    background-color: #1a1a1a;
+    color: #fff;
+    font-family: 'VT323', monospace;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.terminal {
+    width: 700px;
+    max-width: 90%;
+    height: 80vh;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #fff;
+    background-color: #000;
+    box-sizing: border-box;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+}
+
+footer, nav, section {
+    padding: 15px;
+}
+header, footer, nav {
+    background-color: #0d00ff;
+    border-top: 2px solid #fff;
+    padding: 15px
+}
+header {
+    border-bottom: 2px solid #fff;
+    background-color: #000dff;
+    font-size: 2rem;
+    color: rgb(255, 255, 255);
+}
+
+#controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+#controls .controls-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+#controls-logo {
+    height: 130px;
+    width: auto;
+    align-self: center;
+    padding-right: 10px;
+}
+
+#source-link {
+    display: block;
+}
+
+#output-log {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #000;
+}
+
+#output-log pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#controls .line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+#controls .line:last-child {
+    margin-bottom: 0;
+}
+
+span, select, button, a {
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+}
+
+select, button {
+    background-color: #0d00ff;
+    color: #ffffff;
+    border: 3px solid #ffffff;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+select:hover, button:hover {
+    background-color: #ffdd00;
+    color: #000000;
+}
+button:active {
+    background-color: #111;
+}
+
+a {
+    color: rgb(255, 247, 0);
+    text-decoration: underline;
+}
+a:hover {
+    color: rgb(229, 255, 136);
+}
