@@ -3,7 +3,7 @@
 // ==========================================================
 const FIRMWARE_OPTIONS = [
     {
-        displayName: "Fan Firmware v0.1 {ALPHA}",
+        displayName: "Fan Firmware v0.2 {ALPHA}",
         components: [
             { displayName: "Bootloader", binaryId: "bootloader.bin", address: 0x00001000 },
             { displayName: "Partition Table", binaryId: "partitions.bin", address: 0x00008000 },
