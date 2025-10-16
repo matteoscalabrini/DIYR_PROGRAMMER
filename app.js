@@ -3,11 +3,20 @@
 // ==========================================================
 const FIRMWARE_OPTIONS = [
     {
-        displayName: "Fan Firmware v0.1 [ALPHA]",
+        displayName: "Fan Firmware v1.0 [stable]",
         components: [
             { displayName: "Bootloader", binaryId: "bootloader.bin", address: 0x00001000 },
             { displayName: "Partition Table", binaryId: "partitions.bin", address: 0x00008000 },
             { displayName: "Application", binaryId: "firmware.bin", address: 0x00010000 },
+            { displayName: "SPIFFS", binaryId: "spiffs.bin", address: 0x00290000 }
+        ]
+    },
+    {
+        displayName: "Fan Firmware v1.1-beta",
+        components: [
+            { displayName: "Bootloader", binaryId: "bootloader.bin", address: 0x00001000 },
+            { displayName: "Partition Table", binaryId: "partitions.bin", address: 0x00008000 },
+            { displayName: "Application", binaryId: "fan_v1.1-beta.bin", address: 0x00010000 },
             { displayName: "SPIFFS", binaryId: "spiffs.bin", address: 0x00290000 }
         ]
     }
@@ -455,6 +464,14 @@ function initUploaderUI() {
             }
         } catch (error) {
             logStatus(`> FAIL: ${error.message}`);
+            try {
+                const msg = (error && (error.message || String(error))) || '';
+                if (/failed to connect|timeout|timed out|sync|packet header/i.test(msg)) {
+                    logStatus(`> HINT: If connection fails, hold the BOOT button while the terminal shows "Connecting...", then release when flashing starts.`);
+                }
+            } catch (_e) {
+                // ignore hint errors
+            }
         } finally {
             if (transport) {
                 logStatus(`> Closing port.`);
