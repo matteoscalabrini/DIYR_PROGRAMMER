@@ -3,20 +3,11 @@
 // ==========================================================
 const FIRMWARE_OPTIONS = [
     {
-        displayName: "Fan Firmware v1.0 [stable]",
+        displayName: "Fan Firmware v0.1 {ALPHA}",
         components: [
             { displayName: "Bootloader", binaryId: "bootloader.bin", address: 0x00001000 },
             { displayName: "Partition Table", binaryId: "partitions.bin", address: 0x00008000 },
             { displayName: "Application", binaryId: "firmware.bin", address: 0x00010000 },
-            { displayName: "SPIFFS", binaryId: "spiffs.bin", address: 0x00290000 }
-        ]
-    },
-    {
-        displayName: "Fan Firmware v1.1-beta",
-        components: [
-            { displayName: "Bootloader", binaryId: "bootloader.bin", address: 0x00001000 },
-            { displayName: "Partition Table", binaryId: "partitions.bin", address: 0x00008000 },
-            { displayName: "Application", binaryId: "fan_v1.1-beta.bin", address: 0x00010000 },
             { displayName: "SPIFFS", binaryId: "spiffs.bin", address: 0x00290000 }
         ]
     }
