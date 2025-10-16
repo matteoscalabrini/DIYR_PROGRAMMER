@@ -55,7 +55,37 @@ header {
     height: 130px;
     width: auto;
     align-self: center;
-    padding-right: 10px;
+    padding-right: 8px;
+
+}
+
+.helper-box {
+    flex: 0 0 260px;
+    align-self: center;
+    position: relative;
+    padding: 8px 10px 8px 32px;
+    background-color: #ffdd00; /* warning yellow */
+    border: 3px solid #000;    /* strong black border */
+    color: #000;               /* black text like caution signs */
+}
+.helper-box::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 14px;
+    background: repeating-linear-gradient(45deg, #000 0 6px, #ffdd00 6px 12px);
+    border-right: 2px solid #000;
+}
+.helper-text {
+    color: inherit;
+    font-size: 1.2rem;
+    line-height: 1.0;
+    font-weight: 700;
+}
+.helper-text::before {
+    content: "⚠ ";
 }
 
 #source-link {
