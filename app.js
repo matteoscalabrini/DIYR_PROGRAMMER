@@ -18,7 +18,7 @@ const FIRMWARE_OPTIONS = [
             { displayName: "Bootloader", binaryId: "bootloader_BRB.bin", address: 0x00001000 },
             { displayName: "Partition Table", binaryId: "partitions_BRB.bin", address: 0x00008000 },
             { displayName: "Application", binaryId: "firmware_BRB.bin", address: 0x00010000 },
-            { displayName: "SPIFFS", binaryId: "spiffs_BRB.bin", address: 0x00290000 }
+            { displayName: "SPIFFS", binaryId: "spiffs_BRB.bin", address: 0x00390000 }
         ]
     }
 ];
