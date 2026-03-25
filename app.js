@@ -1,6 +1,7 @@
 // ==========================================================
 // == DIYR UPLOADER CONFIGURATION                          ==
 // ==========================================================
+// ==========================================================
 const FIRMWARE_OPTIONS = [
     {
         displayName: "Fan Firmware v0.2.3 {ALPHA}",
@@ -9,7 +10,9 @@ const FIRMWARE_OPTIONS = [
             { displayName: "Partition Table", binaryId: "partitions.bin", address: 0x00008000 },
             { displayName: "Application", binaryId: "firmware.bin", address: 0x00010000 },
             { displayName: "SPIFFS", binaryId: "spiffs.bin", address: 0x00290000 }
-
+        ]
+    },
+    {
         displayName: "BAREBONE FAN v0.1 {ALPHA}",
         components: [
             { displayName: "Bootloader", binaryId: "bootloader_BRB.bin", address: 0x00001000 },
