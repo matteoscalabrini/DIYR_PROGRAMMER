@@ -17,6 +17,7 @@ const FIRMWARE_OPTIONS = [
         components: [
             { displayName: "Bootloader", binaryId: "bootloader_BRB.bin", address: 0x00001000 },
             { displayName: "Partition Table", binaryId: "partitions_BRB.bin", address: 0x00008000 },
+            { displayName: "OTA Data", binaryId: "otadata_blank.bin", address: 0x0000E000 },
             { displayName: "Application", binaryId: "firmware_BRB.bin", address: 0x00010000 },
             { displayName: "SPIFFS", binaryId: "spiffs_BRB.bin", address: 0x00390000 }
         ]
