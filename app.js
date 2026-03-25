@@ -38,6 +38,7 @@ function initUploaderUI() {
 
     const connectButton = document.getElementById('connect-btn');
     const monitorButton = document.getElementById('monitor-btn');
+    const eraseButton = document.getElementById('erase-btn');
     const outputLogContainer = document.getElementById('output-log');
     const outputLog = outputLogContainer ? outputLogContainer.querySelector('pre') : document.querySelector('#output-log pre');
     const firmwareSelect = document.getElementById('firmware-select');
@@ -344,13 +345,98 @@ function initUploaderUI() {
         }
     }
 
+    async function eraseFlash() {
+        let port;
+        let transport;
+        const monitorWasActive = monitorActive || monitorPort;
+        if (monitorWasActive) {
+            await stopSerialMonitor('flash');
+        }
+
+        clearLog();
+        logStatus(`> ACTION: ERASE FLASH`);
+
+        if (!navigator.serial) {
+            logStatus(`> ERR: WebSerial not available in this browser — please switch to Chrome, Edge, Brave, or another Chromium-based browser.`);
+            return;
+        }
+
+        try {
+            logStatus(`> Requesting serial port...`);
+            port = await navigator.serial.requestPort();
+            transport = new Transport(port);
+
+            const terminalAdapter = {
+                clean: () => {},
+                write: (data) => logStatus(data, { newLine: false }),
+                writeLine: (data) => logStatus(data)
+            };
+
+            logStatus(`> Connecting to chip...`);
+            const loader = new ESPLoader({
+                transport: transport,
+                baudRate: 115200,
+                terminal: terminalAdapter
+            });
+
+            await loader.connect();
+            const chipName = loader.chip && loader.chip.CHIP_NAME ? loader.chip.CHIP_NAME : "unknown";
+            logStatus(`> Detected chip: ${chipName}`);
+
+            logStatus(`> Preparing flasher stub...`);
+            await loader.runStub();
+            logStatus(`> Stub active.`);
+
+            logStatus(`> Erasing flash — this may take a moment...`);
+            await loader.eraseFlash();
+
+            logStatus(`> Resetting device...`);
+            await loader.after("hard_reset");
+
+            const successLine = document.createElement('span');
+            successLine.textContent = '> SUCCESS: Flash erased. Device rebooting.';
+            successLine.style.color = '#ffeb3b';
+            successLine.style.fontWeight = '700';
+            successLine.style.display = 'block';
+            outputLog.appendChild(successLine);
+            const scrollTarget = outputLogContainer || outputLog;
+            if (scrollTarget) {
+                scrollTarget.scrollTop = scrollTarget.scrollHeight;
+            }
+        } catch (error) {
+            logStatus(`> FAIL: ${error.message}`);
+            try {
+                const msg = (error && (error.message || String(error))) || '';
+                if (/failed to connect|timeout|timed out|sync|packet header/i.test(msg)) {
+                    logStatus(`> HINT: If connection fails, hold the BOOT button while the terminal shows "Connecting...", then release.`);
+                }
+            } catch (_e) {
+                // ignore hint errors
+            }
+        } finally {
+            if (transport) {
+                logStatus(`> Closing port.`);
+                try {
+                    await transport.disconnect();
+                } catch (closeError) {
+                    logStatus(`> WARN: ${closeError.message}`);
+                }
+            } else if (port) {
+                logStatus(`> Closing port.`);
+                try {
+                    await port.close();
+                } catch (closeError) {
+                    logStatus(`> WARN: ${closeError.message}`);
+                }
+            }
+        }
+    }
+
     async function uploadFirmware() {
         const selectedIndex = Number.parseInt(firmwareSelect.value, 10);
-        const selectedConfig = Number.isNaN(selectedIndex)
-            ? FIRMWARE_OPTIONS[0]
-            : FIRMWARE_OPTIONS[selectedIndex] || FIRMWARE_OPTIONS[0];
+        const selectedConfig = Number.isNaN(selectedIndex) ? null : FIRMWARE_OPTIONS[selectedIndex] ?? null;
         if (!selectedConfig) {
-            logStatus(`> ERR: No firmware configuration defined.`);
+            logStatus(`> ERR: No firmware configuration found for index "${firmwareSelect.value}". Try reloading the page.`);
             return;
         }
         let port;
@@ -509,6 +595,9 @@ function initUploaderUI() {
     }
 
     connectButton.addEventListener('click', uploadFirmware);
+    if (eraseButton) {
+        eraseButton.addEventListener('click', eraseFlash);
+    }
     populateFirmwareSelector();
 }
 
